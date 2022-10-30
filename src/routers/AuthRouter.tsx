@@ -1,4 +1,5 @@
 import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
 
 const AuthRouter = [
   {
@@ -7,7 +8,7 @@ const AuthRouter = [
   },
   {
     path: "/auth/signup",
-    element: <></>,
+    element: <SignUp />,
   },
 ];
 

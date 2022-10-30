@@ -55,7 +55,7 @@ export default class Api {
       );
     }
     return Api.errorResponse(
-      `User width email address "${email}" already exists.`,
+      `User with email address "${email}" already exists.`,
       400
     );
   }
@@ -158,7 +158,7 @@ export default class Api {
   }
 
   private static getResponseTime() {
-    return Math.floor(Math.random() * 3);
+    return Math.floor(Math.max(Math.random() * 4, 2) * 1000);
   }
 
   private static async successResponse(

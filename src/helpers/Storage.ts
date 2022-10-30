@@ -1,7 +1,6 @@
 import { ContactType, UserType } from "./type";
-import { Dataset } from "@mui/icons-material";
 
-type Dataset = {
+type DBDataset = {
   users: {
     [email: string]: UserType;
   };
@@ -13,14 +12,17 @@ type Dataset = {
 };
 
 export default class Storage {
-  private static Dataset: Dataset = {} as any;
+  private static Dataset: DBDataset = {} as any;
   private static datasetKey = "PhoneBook_Dataset";
 
   constructor() {
-    Storage.Dataset = Storage.getItem<Dataset, Dataset>(
+    Storage.Dataset = Storage.getItem<DBDataset, DBDataset>(
       Storage.datasetKey,
-      {} as Dataset
-    ) as Dataset;
+      {
+        users: {},
+        contacts: {},
+      } as DBDataset
+    ) as DBDataset;
   }
 
   static getUsers() {
@@ -61,7 +63,7 @@ export default class Storage {
     Storage.setItem(Storage.datasetKey, Storage.Dataset);
   }
 
-  private static getItem<T, D>(key: string, defaultValue?: D) {
+  static getItem<T, D>(key: string, defaultValue?: D) {
     const data = localStorage.getItem(key);
     if (data !== null) {
       return JSON.parse(data) as T;
@@ -69,12 +71,12 @@ export default class Storage {
     return defaultValue;
   }
 
-  private static setItem(key: string, value: any) {
+  static setItem(key: string, value: any) {
     const data = JSON.stringify(value);
     localStorage.setItem(key, data);
   }
 
-  private static removeItem(key: string) {
+  static removeItem(key: string) {
     localStorage.removeItem(key);
   }
 }
