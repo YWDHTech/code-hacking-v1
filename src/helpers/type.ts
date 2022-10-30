@@ -17,3 +17,32 @@ export type ContactType = {
   address?: string;
   id: number;
 };
+
+export type ApiResponse<T> = {
+  status: number;
+  success: boolean;
+  message: string;
+  data?: T;
+  error?: Error;
+};
+
+export type AlertType = {
+  open: boolean;
+  status?: "success" | "error" | "info";
+  message?: string;
+};
+
+export type AuthPayload = {
+  accessToken: string;
+  user: {
+    email: string;
+    name: string;
+    avatar: string;
+    id: number;
+  };
+};
+
+export enum StorageKey {
+  theme = "PhoneBook_Theme",
+  user = "PhoneBook_User",
+}

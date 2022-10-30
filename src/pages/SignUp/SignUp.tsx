@@ -7,43 +7,45 @@ import {
   Typography,
 } from "@mui/material";
 import AuthCard from "../../components/AuthCard/AuthCard";
-import LoginStyles from "./LoginStyles";
+import SignUpStyles from "./SignUpStyles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import Api from "../../helpers/Api";
 import { Link, useNavigate } from "react-router-dom";
+import Toast from "../../components/Toast/Toast";
 import { useState } from "react";
 import { AlertType, ApiResponse, AuthPayload } from "../../helpers/type";
-import Toast from "../../components/Toast/Toast";
-import { useAppDispatch } from "../../redux/store";
 import { setUser } from "../../redux/userSlice";
+import { useAppDispatch } from "../../redux/store";
 
 type FormType = {
+  name: string;
   email: string;
   password: string;
 };
 
-export default function Login() {
-  const { classes } = LoginStyles();
+export default function SignUp() {
+  const { classes } = SignUpStyles();
   const [alert, setAlert] = useState<AlertType>({ open: false });
   const dispatch = useAppDispatch;
   const navigate = useNavigate();
 
   const formik = useFormik<FormType>({
-    initialValues: { email: "", password: "" },
-    onSubmit: ({ email, password }) => {
-      login.mutate({ email, password });
+    initialValues: { name: "", email: "", password: "" },
+    onSubmit: ({ name, email, password }) => {
+      signUp.mutate({ name, email, password });
     },
     validationSchema: Yup.object({
+      name: Yup.string().label("Name").min(3).required(),
       email: Yup.string().label("Email address").email().required(),
       password: Yup.string().label("Password").min(6).required(),
     }),
   });
 
-  const login = useMutation(
-    ({ email, password }: FormType) => {
-      return Api.login(email, password) as any;
+  const signUp = useMutation(
+    ({ name, email, password }: FormType) => {
+      return Api.signup(name, email, password) as any;
     },
     {
       onSuccess: ({ success, data, message }: ApiResponse<AuthPayload>) => {
@@ -76,6 +78,20 @@ export default function Login() {
         <AuthCard>
           <form onSubmit={formik.handleSubmit}>
             <Box>
+              <Box className={classes.formField}>
+                <Typography variant={"body2"}>Name</Typography>
+                <TextField
+                  helperText={formik.errors.name}
+                  error={!!formik.errors.name}
+                  onChange={formik.handleChange("name")}
+                  fullWidth
+                  name={"name"}
+                  variant={"outlined"}
+                  size={"small"}
+                  type={"text"}
+                  placeholder={"Name"}
+                />
+              </Box>
               <Box className={classes.formField}>
                 <Typography variant={"body2"}>Email</Typography>
                 <TextField
@@ -111,16 +127,16 @@ export default function Login() {
                 color={"primary"}
                 className={classes.button}
               >
-                {login.isLoading ? "Loading..." : "Sign in"}
+                {signUp.isLoading ? "Loading..." : "Sign up"}
               </Button>
               <br />
               <Button
                 variant={"text"}
                 className={classes.button}
                 component={Link}
-                to={"/auth/signup"}
+                to={"/auth/login"}
               >
-                Don't have an account?
+                Already have an account?
               </Button>
             </Box>
           </form>

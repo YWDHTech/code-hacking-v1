@@ -39,6 +39,9 @@ export default function muiTheme(mode: ThemeMode) {
         fontWeightRegular: "400",
         fontWeightLight: "300",
         fontWeightMedium: "500",
+        button: {
+          textTransform: "none",
+        },
       },
     })
   );
