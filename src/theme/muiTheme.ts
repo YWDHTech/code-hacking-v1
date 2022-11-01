@@ -23,6 +23,7 @@ export default function muiTheme(mode: ThemeMode) {
             : dark.text,
         primary: {
           main: "rgb(79, 70, 229)",
+          dark: "rgb(17, 24, 39)",
         },
         secondary: {
           main: "rgb(209, 213, 219)",
