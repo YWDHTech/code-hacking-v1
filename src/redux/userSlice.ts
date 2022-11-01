@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthPayload, StorageKey } from "../helpers/type";
 import Storage from "../helpers/Storage";
 
-const initialState: AuthPayload = {} as any;
+const initialState: AuthPayload = Storage.getItem(StorageKey.user, {}) as any;
 
 const userSlice = createSlice({
   name: "userSlice",
