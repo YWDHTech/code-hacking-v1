@@ -14,6 +14,8 @@ import {
   TextField,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Search } from "@mui/icons-material";
@@ -34,6 +36,8 @@ export default function TopBar({ drawerWidth, handleDrawerToggle }: Props) {
   const dispatch = useAppDispatch;
   const navigate = useNavigate();
   const { user } = useAppSelector((store) => store.user);
+  const theme = useTheme();
+  const small = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -74,12 +78,16 @@ export default function TopBar({ drawerWidth, handleDrawerToggle }: Props) {
         </Stack>
         <Stack direction={"row"} alignItems={"center"}>
           <ListItem disableGutters dense onClick={handleClick}>
-            <ListItemButton dense disableRipple disableTouchRipple>
-              <ListItemAvatar>
-                <Avatar src={user.avatar} alt="user-avatar" />
-              </ListItemAvatar>
-              <ListItemText primary={user.name} secondary={user.email} />
-            </ListItemButton>
+            {small ? (
+              <Avatar src={user.avatar} alt="user-avatar" sx={{ m: 0 }} />
+            ) : (
+              <ListItemButton dense disableRipple disableTouchRipple>
+                <ListItemAvatar>
+                  <Avatar src={user.avatar} alt="user-avatar" />
+                </ListItemAvatar>
+                <ListItemText primary={user.name} secondary={user.email} />
+              </ListItemButton>
+            )}
           </ListItem>
         </Stack>
         <Menu

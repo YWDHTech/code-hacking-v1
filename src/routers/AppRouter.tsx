@@ -1,13 +1,14 @@
-import { Typography } from "@mui/material";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Contacts from "../pages/Contacts/Contacts";
 
 const AppRouter = [
   {
     path: "/app/dashboard",
-    element: <Typography variant={"h4"}>Dashboard</Typography>,
+    element: <Dashboard />,
   },
   {
     path: "/app/contacts",
-    element: <Typography variant={"h4"}>My Contacts</Typography>,
+    element: <Contacts />,
   },
 ];
 

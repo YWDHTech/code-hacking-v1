@@ -59,9 +59,6 @@ export default function Login() {
           message,
         });
       },
-      onError: (err) => {
-        console.log(err);
-      },
     }
   );
 

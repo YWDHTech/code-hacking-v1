@@ -15,7 +15,7 @@ export type ContactType = {
   phoneNumber: string;
   emailAddress?: string;
   address?: string;
-  id: number;
+  id: string;
 };
 
 export type ApiResponse<T> = {
@@ -40,6 +40,23 @@ export type AuthPayload = {
     avatar: string;
     id: number;
   };
+};
+
+export type TableRowType = {
+  [key: string]: any;
+};
+
+export type TableColumnType<T> = {
+  key: string;
+  label: string;
+  align?: "left" | "center" | "right";
+  width?: string;
+  render?: (TableRenderParams: {
+    value: any;
+    colIndex: number;
+    rowIndex: number;
+    row: T | TableRowType;
+  }) => any;
 };
 
 export enum StorageKey {

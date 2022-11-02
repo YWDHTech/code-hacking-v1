@@ -22,7 +22,10 @@ export default class Api {
         );
       }
     }
-    return Api.errorResponse("Invalid credentials, email or password.", 401);
+    return Api.errorResponse(
+      "Invalid credentials! incorrect email or password.",
+      401
+    );
   }
 
   static async signup(
@@ -82,7 +85,7 @@ export default class Api {
   ) {
     return Api.authenticateUser(token, ({ email }) => {
       const contact: ContactType = {
-        id: Date.now(),
+        id: Date.now().toString(),
         address,
         emailAddress,
         firstname,
@@ -132,7 +135,10 @@ export default class Api {
       const user = Storage.getUser(tokenData.email);
       return cb(user);
     }
-    return Api.errorResponse("Unauthorized!", 401);
+    return Api.errorResponse(
+      "Unauthorized!: Your session has expired, Logging out.",
+      401
+    );
   }
 
   private static generateToken(
@@ -179,15 +185,11 @@ export default class Api {
   }
 
   private static async errorResponse(message: string, status: number = 500) {
-    return new Promise((reject) => {
-      setTimeout(() => {
-        reject({
-          status,
-          success: false,
-          message: message || "An unexpected error occurred!",
-          error: new Error(message || "An unexpected error occurred!"),
-        });
-      }, Api.getResponseTime());
+    return Promise.reject({
+      status,
+      success: false,
+      message: message || "An unexpected error occurred!",
+      error: new Error(message || "An unexpected error occurred!"),
     });
   }
 }
