@@ -48,13 +48,18 @@ export default class Storage {
 
   static insertUser(userObject: UserType) {
     Storage.Dataset.users[userObject.email] = userObject;
+    Storage.Dataset.contacts[userObject.email] = {};
     Storage.setItem(Storage.datasetKey, Storage.Dataset);
   }
 
   static insertContact(email: string, contactObject: ContactType) {
-    Storage.Dataset.contacts[email] = {
-      [contactObject.id]: contactObject,
-    };
+    if (Storage.Dataset.contacts[email]) {
+      Storage.Dataset.contacts[email][contactObject.id] = contactObject;
+    } else {
+      Storage.Dataset.contacts[email] = {
+        [contactObject.id]: contactObject,
+      };
+    }
     Storage.setItem(Storage.datasetKey, Storage.Dataset);
   }
 

@@ -61,9 +61,6 @@ export default function SignUp() {
           message,
         });
       },
-      onError: (err) => {
-        console.log(err);
-      },
     }
   );
 

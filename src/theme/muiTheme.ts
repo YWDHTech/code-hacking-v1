@@ -30,7 +30,7 @@ export default function muiTheme(mode: ThemeMode) {
         },
       },
       shape: {
-        borderRadius: 10,
+        borderRadius: 8,
       },
       typography: {
         fontFamily: ["Inter", "sans-serif"].join(","),
